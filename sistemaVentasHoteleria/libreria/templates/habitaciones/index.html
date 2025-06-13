@@ -1,0 +1,52 @@
+{% extends "base.html" %} 
+{% block titulo %} Nosotros {% endblock %} 
+{% block contenido %}
+
+<div class="card text-start">
+  <img class="card-img-top" src="holder.js/100px180/" alt="Title" />
+  <div class="card-body">
+    <h4 class="card-title">Title</h4>
+    <p class="card-text">Body</p>
+  </div>
+</div>
+  <nav
+    class="nav justify-content-center  "
+  >
+    <a class="nav-link active" href="{% url 'crear'%}" aria-current="page"
+      >Crear habitacion</a
+    >
+  </nav>
+  
+
+<div class="table-responsive">
+  <table class="table table-primary">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Titulo</th>
+        <th scope="col">Img</th>
+        <th scope="col">Descripcion</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="">
+        <td scope="row">1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td><a
+          name=""
+          id=""
+          class="btn btn-primary"
+          href="{%url 'editar'%}"
+          role="button"
+          >Button</a
+        >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

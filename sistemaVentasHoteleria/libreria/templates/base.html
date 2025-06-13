@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -20,16 +21,16 @@
 
   <body>
     <nav class="nav justify-content-center">
-      <a class="nav-link active" href="#" aria-current="page">Active link</a>
-      <a class="nav-link" href="#">Link</a>
-      <a class="nav-link disabled" href="#">Nosotor</a>
+      <a class="nav-link active" href="{% url 'inicio' %}" aria-current="page">Inicio</a>
+      <a class="nav-link" href="{% url 'nosotros' %}">Nosotros</a>
+      <a class="nav-link active" href="{% url 'habitaciones' %}">Habitaciones</a>
     </nav>
 
     <div class="container">
       <div class="row">
         <div class="col-12">
 
-
+            {% block contenido %}{% endblock %}
         </div>
       </div>
     </div>

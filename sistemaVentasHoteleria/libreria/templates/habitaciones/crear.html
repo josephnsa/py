@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+    Crear
+{% endblock %}
+
+{% block contenido %}
+            <div class="card text-start">
+                <img class="card-img-top" src="holder.js/100px180/" alt="Title" />
+                <div class="card-body">
+                    <h4 class="card-title">Crearemos un formulario</h4>
+                    <p class="card-text">Crear</p>
+                </div>
+            </div>
+            
+{% include "habitaciones/form.html" %}
+{% endblock %}
