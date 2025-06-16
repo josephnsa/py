@@ -1,18 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-# Create your views here.
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
 def inicio(request):
     return render(request, 'paginas/Inicio.html')
-
+    
 def nosotros(request):
-    return  render (request, 'paginas/nosotros.html')
+    return render(request, 'paginas/nosotros.html')
+
 def habitaciones(request):
-    return  render (request, 'habitaciones/index.html')
+    return render(request, 'habitaciones/index.html')
+
 def crear_habitacion(request):
-    return render ( request, 'habitaciones/crear.html')
+    return render(request, 'habitaciones/crear.html')
+
 def editar(request):
-    return render ( request, 'habitaciones/editar.html')
-#Login
+    return render(request, 'habitaciones/editar.html')
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -27,7 +33,6 @@ def login_view(request):
 
     return render(request, 'usuarios/login.html')
 
-# Registro
 def register_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -39,7 +44,7 @@ def register_view(request):
         form = UserCreationForm()
     return render(request, 'usuarios/register.html', {'form': form})
 
-# Logout
 def logout_view(request):
     logout(request)
     return redirect('login')
+
