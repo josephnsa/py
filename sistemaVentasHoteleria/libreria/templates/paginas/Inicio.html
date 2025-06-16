@@ -1,52 +1,35 @@
 {% extends "base.html" %}
 
 {% block titulo %}
-    Aqui hacer su inicio
+Sistema de Gestión Hotelera
 {% endblock %}
 
 {% block contenido %}
-            
-<div class="row align-items-md-stretch">
-    <div class="col-md-6">
-        <div
-            class="h-100 p-5 text-white bg-primary border rounded-3"
-        >
-            <h2>Change the background</h2>
-            <p>
-                Swap the background-color utility and add a `.text-*` color
-                utility to mix up the jumbotron look. Then, mix and match with
-                additional component themes and more.
-            </p>
-            <button
-                class="btn btn-outline-primary"
-                type="button"
-            >
-                Example button
-            </button>
+<div class="container mt-5">
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold">Bienvenido al Sistema de Gestión Hotelera</h1>
+    <p class="lead text-muted">Administra reservas, habitaciones y clientes desde una sola plataforma web.</p>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body text-center">
+          <h5 class="card-title">¿Ya tienes cuenta?</h5>
+          <p class="card-text">Ingresa al sistema con tu usuario y contraseña.</p>
+          <a href="{% url 'login' %}" class="btn btn-primary">Iniciar sesión</a>
         </div>
+      </div>
     </div>
-    <div class="col-md-6">
-        <div
-            class="h-100 p-5 bg-primary border rounded-3"
-        >
-            <h2>Add borders</h2>
-            <p>
-                Or, keep it light and add a border for some added definition
-                to the boundaries of your content. Be sure to look under the
-                hood at the source HTML here as we've adjusted the alignment and
-                sizing of both column's content for equal-height.
-            </p>
-            <button
-                class="btn Swap the background-color utility and add a `.text-*` color
-                utility to mix up the jumbotron look. Then, mix and match with
-                additional component themes and more."
-                type="button"
-            >
-                Example button
-            </button>
+    <div class="col-md-5">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title">¿Eres nuevo?</h5>
+          <p class="card-text">Crea una cuenta para acceder a todas las funcionalidades del sistema.</p>
+          <a href="{% url 'register' %}" class="btn btn-outline-primary">Registrarse</a>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-
-
 {% endblock %}
