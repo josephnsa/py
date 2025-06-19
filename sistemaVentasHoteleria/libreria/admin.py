@@ -1,46 +1,77 @@
 from django.contrib import admin
-from .models import CategoriaCuarto, Cuarto, ReservaCuarto
+from django.contrib.auth.admin import UserAdmin
+from .models import (
+    Room,
+    RoomCategory,
+    RoomType,
+    RoomStatus,
+    BedType,
+    Amenity,
+    RoomAmenity,
+    Customer,
+    RoomReservation,
+    ReservationSource,
+    Service,
+    RoomService,
+    Payment,
+    Staff,
+    DocumentType,
+    RoomMaintenance,
+    RoomChangeLog,
+    ReservationHistory,
+    CustomUser,
+)
 
 
-@admin.register(CategoriaCuarto)
-class CategoriaCuartoAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'descripcion')
-    search_fields = ('nombre',)
+# ------------------------------
+# Sección: Habitaciones
+# ------------------------------
+@admin.register(Room)
+class RoomAdmin(admin.ModelAdmin):
+    list_display = ('number', 'floor', 'type', 'status', 'available')
+    list_filter = ('type', 'status', 'floor')
+    search_fields = ('number',)
 
+admin.site.register(RoomCategory)
+admin.site.register(RoomType)
+admin.site.register(RoomStatus)
+admin.site.register(BedType)
+admin.site.register(Amenity)
+admin.site.register(RoomAmenity)
 
-@admin.register(Cuarto)
-class CuartoAdmin(admin.ModelAdmin):
-    list_display = ('numero', 'piso', 'categoria', 'capacidad', 'precio_por_noche', 'disponible')
-    list_filter = ('piso', 'categoria', 'disponible')
-    search_fields = ('numero',)
-    readonly_fields = ('fecha_creacion', 'fecha_actualizacion')
-    fieldsets = (
-        ('Información General', {
-            'fields': ('numero', 'piso', 'categoria', 'capacidad', 'descripcion', 'servicios')
-        }),
-        ('Multimedia y Estado', {
-            'fields': ('imagen', 'precio_por_noche', 'disponible')
-        }),
-        ('Tiempos del Registro', {
-            'fields': ('fecha_creacion', 'fecha_actualizacion')
-        }),
-    )
+# ------------------------------
+# Sección: Reservas
+# ------------------------------
+admin.site.register(RoomReservation)
+admin.site.register(ReservationSource)
 
+# ------------------------------
+# Sección: Clientes y Staff
+# ------------------------------
+admin.site.register(Customer)
+admin.site.register(Staff)
+@admin.register(DocumentType)
+class DocumentTypeAdmin(admin.ModelAdmin):
+    list_display = ('abbreviation', 'name')
+    search_fields = ('name', 'abbreviation')
 
-@admin.register(ReservaCuarto)
-class ReservaCuartoAdmin(admin.ModelAdmin):
-    list_display = ('codigo_reserva', 'nombre_cliente', 'cuarto', 'fecha_ingreso', 'fecha_salida', 'estado')
-    list_filter = ('estado', 'fecha_ingreso', 'fecha_salida')
-    search_fields = ('codigo_reserva', 'nombre_cliente', 'documento_cliente')
-    readonly_fields = ('codigo_reserva', 'fecha_reserva')
-    fieldsets = (
-        ('Datos del Cliente', {
-            'fields': ('nombre_cliente', 'documento_cliente', 'correo_cliente', 'telefono_cliente')
-        }),
-        ('Reserva', {
-            'fields': ('cuarto', 'fecha_ingreso', 'fecha_salida', 'estado')
-        }),
-        ('Información del Sistema', {
-            'fields': ('codigo_reserva', 'fecha_reserva')
+# ------------------------------
+# Sección: Servicios y Pagos
+# ------------------------------
+admin.site.register(Service)
+admin.site.register(RoomService)
+admin.site.register(Payment)
+
+admin.site.register(RoomMaintenance)
+admin.site.register(RoomChangeLog)
+admin.site.register(ReservationHistory)
+
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    model = CustomUser
+    list_display = ('username', 'email', 'dni', 'is_staff', 'region', 'district')
+    fieldsets = UserAdmin.fieldsets + (
+        (None, {
+            'fields': ('dni', 'phone', 'address', 'region', 'district', 'email_confirmed', 'accepted_terms')
         }),
     )

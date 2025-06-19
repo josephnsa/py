@@ -3,10 +3,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .models import ReservaCuarto  
-from django.http import JsonResponse
-from .models import CategoriaCuarto
-from django.db.models import Q
+# from .forms import CustomUserCreationForm
+
 def inicio(request):
     return render(request, 'paginas/Inicio.html')
     
@@ -14,8 +12,7 @@ def nosotros(request):
     return render(request, 'paginas/nosotros.html')
 
 def habitaciones(request):
-    reservas = ReservaCuarto.objects.select_related('cuarto').all()
-    return render(request, 'habitaciones/index.html', {'reservas': reservas})
+    return render(request, 'habitaciones/index.html')
 
 def crear_habitacion(request):
     return render(request, 'habitaciones/crear.html')
@@ -37,23 +34,18 @@ def login_view(request):
 
     return render(request, 'usuarios/login.html')
 
-def register_view(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Cuenta creada con éxito. Ahora puedes iniciar sesión.')
-            return redirect('login')
-    else:
-        form = UserCreationForm()
-    return render(request, 'usuarios/register.html', {'form': form})
-
 def logout_view(request):
     logout(request)
     return redirect('login')
+def register_view(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'auth/register.html', {'form': form})
 
-def obtener_categorias(request):
-    categorias = CategoriaCuarto.objects.all().values('id', 'nombre')
-    return JsonResponse(list(categorias), safe=False)
 
-    
