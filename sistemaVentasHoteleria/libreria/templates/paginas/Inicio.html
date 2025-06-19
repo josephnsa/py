@@ -1,161 +1,192 @@
-{% extends "base.html" %}
-{% load static %} 
+{% extends 'base.html' %}
+{% load static %}
 
-{% block titulo %}Sistema de Gestión Hotelera{% endblock %}
+{% block titulo %}
+  Sistema de Gestión Hotelera
+{% endblock %}
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+  <link rel="stylesheet" href="{% static 'css/estilos.css' %}" />
 {% endblock %}
 
 {% block contenido %}
- 
-<header>
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Hotel Paraíso</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar navegación">
-        <span class="navbar-toggler-icon"></span>
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Hotel Paraíso</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Alternar navegación"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Reservas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Servicio no disponible</a>
+            </li>
+          </ul>
+          <form class="d-flex" action="{% url 'login' %}" method="get">
+            <button class="btn btn-outline-success" type="submit">Iniciar sesión</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="text-white bg-dark">
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel ">
+      <div class="carousel-indicators vh-100">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner vh-80">
+        <div class="carousel-item active">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <rect width="100%" height="100%" fill="#777" />
+          </svg>
+
+          <div class="container">
+            <div class="carousel-caption text-start">
+              <h1>Bienvenido a Hotel Paraíso</h1>
+              <p>Disfruta de una experiencia única con instalaciones de lujo y servicio personalizado.</p>
+              <p>
+                <a class="btn btn-lg btn-primary" href="#">Reserva ahora</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <rect width="100%" height="100%" fill="#777" />
+          </svg>
+
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Descanso garantizado</h1>
+              <p>Relájate en nuestras cómodas habitaciones con vistas espectaculares y todas las comodidades que necesitas.</p>
+              <p>
+                <a class="btn btn-lg btn-primary" href="#">Saber más</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <rect width="100%" height="100%" fill="#777" />
+          </svg>
+
+          <div class="container">
+            <div class="carousel-caption text-end">
+              <h1>Descubre nuestro entorno</h1>
+              <p>Explora paisajes naturales, actividades recreativas y la cultura local desde nuestro hotel.</p>
+              <p>
+                <a class="btn btn-lg btn-primary" href="#">Ver galería</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Reservas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Servicio no disponible</a>
-          </li>
-        </ul>
-     <form class="d-flex" action="{% url 'login' %}" method="get">
-  <button class="btn btn-outline-success" type="submit">Iniciar sesión</button>
-</form>
-
-      </div>
+      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+      </button>
     </div>
-  </nav>
-</header>
 
-<main class="text-white bg-dark">
-  <div id="myCarousel" class="carousel slide " data-bs-ride="carousel ">
-    <div class="carousel-indicators vh-100">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner vh-80">
-      <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+    <div class="container marketing">
+      <div class="row">
+        <div class="col-lg-4">
+          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="#777" />
+          </svg>
 
-        <div class="container">
-          <div class="carousel-caption text-start">
-            <h1>Bienvenido a Hotel Paraíso</h1>
-            <p>Disfruta de una experiencia única con instalaciones de lujo y servicio personalizado.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Reserva ahora</a></p>
-          </div>
+          <h2>Habitaciones de lujo</h2>
+          <p>Espacios diseñados para tu confort con acabados elegantes y todas las comodidades que necesitas.</p>
+          <p>
+            <a class="btn btn-secondary" href="#">Ver detalles</a>
+          </p>
+        </div>
+        <div class="col-lg-4">
+          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="#777" />
+          </svg>
+
+          <h2>Gastronomía local</h2>
+          <p>Disfruta de una exquisita variedad de platos típicos e internacionales preparados por chefs expertos.</p>
+          <p>
+            <a class="btn btn-secondary" href="#">Ver detalles</a>
+          </p>
+        </div>
+        <div class="col-lg-4">
+          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="#777" />
+          </svg>
+
+          <h2>Eventos y reuniones</h2>
+          <p>Salones equipados para bodas, conferencias y eventos corporativos con atención personalizada.</p>
+          <p>
+            <a class="btn btn-secondary" href="#">Ver detalles</a>
+          </p>
         </div>
       </div>
-      <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
 
-        <div class="container">
-          <div class="carousel-caption">
-            <h1>Descanso garantizado</h1>
-            <p>Relájate en nuestras cómodas habitaciones con vistas espectaculares y todas las comodidades que necesitas.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Saber más</a></p>
-          </div>
+      <hr class="featurette-divider" />
+
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Vive una experiencia inolvidable <span class="text-muted">te lo mereces.</span></h2>
+          <p class="lead">Descansa en un entorno natural con todos los servicios que necesitas para unas vacaciones perfectas.</p>
+        </div>
+        <div class="col-md-5">
+          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="#eee" />
+          </svg>
         </div>
       </div>
-      <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
 
-        <div class="container">
-          <div class="carousel-caption text-end">
-            <h1>Descubre nuestro entorno</h1>
-            <p>Explora paisajes naturales, actividades recreativas y la cultura local desde nuestro hotel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Ver galería</a></p>
-          </div>
+      <hr class="featurette-divider" />
+
+      <div class="row featurette">
+        <div class="col-md-7 order-md-2">
+          <h2 class="featurette-heading">Comodidad y estilo <span class="text-muted">en cada rincón.</span></h2>
+          <p class="lead">Nuestras instalaciones combinan diseño moderno y funcionalidad para brindarte una estadía excepcional.</p>
+        </div>
+        <div class="col-md-5 order-md-1">
+          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="#eee" />
+          </svg>
         </div>
       </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Anterior</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Siguiente</span>
-    </button>
-  </div>
 
-  <div class="container marketing">
-    <div class="row">
-      <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#777"/></svg>
+      <hr class="featurette-divider" />
 
-        <h2>Habitaciones de lujo</h2>
-        <p>Espacios diseñados para tu confort con acabados elegantes y todas las comodidades que necesitas.</p>
-        <p><a class="btn btn-secondary" href="#">Ver detalles</a></p>
+      <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Descubre más con nosotros <span class="text-muted">¡te esperamos!</span></h2>
+          <p class="lead">Nuestro equipo está comprometido en brindarte atención cálida y personalizada desde tu llegada.</p>
+        </div>
+        <div class="col-md-5">
+          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100%" height="100%" fill="#eee" />
+          </svg>
+        </div>
       </div>
-      <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#777"/></svg>
 
-        <h2>Gastronomía local</h2>
-        <p>Disfruta de una exquisita variedad de platos típicos e internacionales preparados por chefs expertos.</p>
-        <p><a class="btn btn-secondary" href="#">Ver detalles</a></p>
-      </div>
-      <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#777"/></svg>
-
-        <h2>Eventos y reuniones</h2>
-        <p>Salones equipados para bodas, conferencias y eventos corporativos con atención personalizada.</p>
-        <p><a class="btn btn-secondary" href="#">Ver detalles</a></p>
-      </div>
+      <hr class="featurette-divider" />
     </div>
 
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">Vive una experiencia inolvidable <span class="text-muted">te lo mereces.</span></h2>
-        <p class="lead">Descansa en un entorno natural con todos los servicios que necesitas para unas vacaciones perfectas.</p>
-      </div>
-      <div class="col-md-5">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#eee"/></svg>
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading">Comodidad y estilo <span class="text-muted">en cada rincón.</span></h2>
-        <p class="lead">Nuestras instalaciones combinan diseño moderno y funcionalidad para brindarte una estadía excepcional.</p>
-      </div>
-      <div class="col-md-5 order-md-1">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#eee"/></svg>
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">Descubre más con nosotros <span class="text-muted">¡te esperamos!</span></h2>
-        <p class="lead">Nuestro equipo está comprometido en brindarte atención cálida y personalizada desde tu llegada.</p>
-      </div>
-      <div class="col-md-5">
-        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#eee"/></svg>
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-  </div>
-
-  <footer class="container">
-    <p class="float-end"><a href="#">Volver arriba</a></p>
-    <p>&copy; 2021–2025 Hotel Paraíso &middot; <a href="#">Política de privacidad</a> &middot; <a href="#">Términos de uso</a></p>
-  </footer>
-</main>
-
+    <footer class="container">
+      <p class="float-end">
+        <a href="#">Volver arriba</a>
+      </p>
+      <p>
+        &copy; 2021–2025 Hotel Paraíso &middot; <a href="#">Política de privacidad</a> &middot; <a href="#">Términos de uso</a>
+      </p>
+    </footer>
+  </main>
 {% endblock %}

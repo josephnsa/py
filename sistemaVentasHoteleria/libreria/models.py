@@ -1,10 +1,15 @@
 from django.db import models
+from django.utils import timezone
+import uuid 
+# Create your models here.
+
+from django.db import models
 
 class CategoriaCuarto(models.Model):
     nombre = models.CharField(max_length=50, unique=True, verbose_name="Nombre de la categoría")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripción")
 
-    def __str__(self):
+    def _str_(self):
         return self.nombre
 
 
@@ -45,24 +50,52 @@ class Cuarto(models.Model):
         verbose_name_plural = "Cuartos"
         ordering = ['piso', 'numero']
 
-    def __str__(self):
+    def _str_(self):
         return f"Cuarto {self.numero} - Piso {self.piso} ({'Disponible' if self.disponible else 'Ocupado'})"
+ESTADO_RESERVA_CHOICES = [
+    ('reservado', 'Reservado'),
+    ('ocupado', 'Ocupado'),
+    ('cancelado', 'Cancelado'),
+    ('finalizado', 'Finalizado'),
+]
 
 
 class ReservaCuarto(models.Model):
-    cuarto = models.ForeignKey(Cuarto, on_delete=models.CASCADE, verbose_name="Cuarto reservado")
+    codigo_reserva = models.CharField(
+        max_length=12,
+        unique=True,
+        editable=False,
+        verbose_name="Código de Reserva"
+    )
     
-    # Datos del cliente
     nombre_cliente = models.CharField(max_length=100, verbose_name="Nombre del cliente")
-    dni_cliente = models.CharField(max_length=20, verbose_name="DNI del cliente")
-    correo_cliente = models.EmailField(verbose_name="Correo electrónico", blank=True, null=True)
-    telefono_cliente = models.CharField(max_length=15, verbose_name="Teléfono", blank=True, null=True)
+    documento_cliente = models.CharField(max_length=20, verbose_name="Documento del cliente")
+    correo_cliente = models.EmailField(blank=True, null=True, verbose_name="Correo del cliente")
+    telefono_cliente = models.CharField(max_length=15, blank=True, null=True, verbose_name="Teléfono del cliente")
     
-    fecha_inicio = models.DateField(verbose_name="Fecha de ingreso")
+    cuarto = models.ForeignKey(Cuarto, on_delete=models.PROTECT, verbose_name="Cuarto reservado")
+    fecha_ingreso = models.DateField(verbose_name="Fecha de ingreso")
     fecha_salida = models.DateField(verbose_name="Fecha de salida")
-    fecha_reserva = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de la reserva")
+    fecha_reserva = models.DateTimeField(default=timezone.now, verbose_name="Fecha de reserva")
 
-    observaciones = models.TextField(blank=True, null=True, verbose_name="Observaciones del cliente")
+    estado = models.CharField(max_length=10, choices=ESTADO_RESERVA_CHOICES, default='reservado', verbose_name="Estado de la reserva")
+
+    def save(self, *args, **kwargs):
+        # Generar un código único si no existe
+        if not self.codigo_reserva:
+            self.codigo_reserva = self.generar_codigo_reserva()
+
+        # Actualizar disponibilidad del cuarto según el estado
+        if self.estado in ['reservado', 'ocupado']:
+            self.cuarto.disponible = False
+        else:
+            self.cuarto.disponible = True
+        self.cuarto.save()
+        super().save(*args, **kwargs)
+
+    def generar_codigo_reserva(self):
+        # Ejemplo: RES-8CARACTERES
+        return 'RES-' + uuid.uuid4().hex[:8].upper()
 
     class Meta:
         verbose_name = "Reserva de Cuarto"
@@ -70,11 +103,4 @@ class ReservaCuarto(models.Model):
         ordering = ['-fecha_reserva']
 
     def __str__(self):
-        return f"Reserva de {self.cuarto} por {self.nombre_cliente}"
-
-    def save(self, *args, **kwargs):
-        # Marcar el cuarto como no disponible al hacer una reserva
-        if self.cuarto.disponible:
-            self.cuarto.disponible = False
-            self.cuarto.save()
-        super().save(*args, **kwargs)
+        return f"{self.codigo_reserva} - {self.nombre_cliente} ({self.estado})"

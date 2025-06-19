@@ -87,3 +87,13 @@ main {
 
 .fw-semibold { font-weight: 600; }
 .lh-tight { line-height: 1.25; }
+@media (max-width: 767.98px) {
+  .sidebar-custom {
+    width: 100% !important;
+    height: auto;
+  }
+
+  #contenido-dinamico {
+    padding: 1rem;
+  }
+}

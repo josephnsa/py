@@ -1,62 +1,79 @@
-<form>
-  <!-- 2 column grid layout with text inputs for the first and last names -->
-  <div class="row mb-4">
-    <div class="col">
-      <div data-mdb-input-init class="form-outline">
-        <input type="text" id="form6Example1" class="form-control" />
-        <label class="form-label" for="form6Example1">First name</label>
-      </div>
+<div class="container py-5 bg-dark text-white">
+  <!-- Panel de Filtros -->
+  <div class="card bg-dark border-secondary shadow mb-4">
+    <div class="card-header bg-secondary text-white fw-bold">
+      Filtros de búsqueda
     </div>
-    <div class="col">
-      <div data-mdb-input-init class="form-outline">
-        <input type="text" id="form6Example2" class="form-control" />
-        <label class="form-label" for="form6Example2">Last name</label>
-      </div>
+    <div class="card-body">
+      <form class="row g-3">
+        <div class="col-md-3">
+          <label for="codigo" class="form-label text-white">Código</label>
+          <input type="text" class="form-control bg-dark text-white border-secondary" id="codigo">
+        </div>
+
+        <div class="col-md-3">
+          <label for="fechaIngreso" class="form-label text-white">Fecha de Ingreso</label>
+          <input type="date" class="form-control bg-dark text-white border-secondary" id="fechaIngreso">
+        </div>
+
+        <div class="col-md-3">
+          <label for="fechaSalida" class="form-label text-white">Fecha de Salida</label>
+          <input type="date" class="form-control bg-dark text-white border-secondary" id="fechaSalida">
+        </div>
+
+        <div class="col-md-3">
+          <label for="tipoHabitacion" class="form-label text-white">Tipo de habitación</label>
+          <select class="form-select bg-dark text-white border-secondary" id="tipoHabitacion">
+  <option selected disabled>Selecciona...</option>
+</select>
+
+        </div>
+
+        <div class="col-12 text-end">
+<button type="submit" class="btn btn-outline-light px-4">Buscar</button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <!-- Text input -->
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="text" id="form6Example3" class="form-control" />
-    <label class="form-label" for="form6Example3">Company name</label>
+  <!-- Panel de Resultados -->
+  <div class="card bg-dark border-secondary shadow">
+    <div class="card-header bg-secondary text-white fw-bold">
+      Resultados de Reservas
+    </div>
+    <div class="card-body table-responsive">
+     <table class="table table-dark table-bordered table-hover">
+      <thead class="thead-light text-white">
+        <tr>
+          <th>Código</th>
+          <th>Acciones</th>
+          <th>Cuarto Reservado</th>
+          <th>Nombre del Cliente</th>
+          <th>Fecha Ingreso</th>
+          <th>Fecha Salida</th>
+          <th>Fecha Reserva</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reserva in reservas %}
+        <tr>
+          <td>{{ reserva.codigo_reserva }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm">Editar</button>
+            <button class="btn btn-danger btn-sm">Eliminar</button>
+          </td>
+          <td>{{ reserva.cuarto.numero }}</td>
+          <td>{{ reserva.nombre_cliente }}</td>
+          <td>{{ reserva.fecha_ingreso }}</td>
+          <td>{{ reserva.fecha_salida }}</td>
+          <td>{{ reserva.fecha_reserva|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7" class="text-center">No hay reservas registradas.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <pre>{{ reservas }}</pre>
+    </div>
   </div>
-
-  <!-- Text input -->
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="text" id="form6Example4" class="form-control" />
-    <label class="form-label" for="form6Example4">Address</label>
-  </div>
-
-  <!-- Email input -->
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="email" id="form6Example5" class="form-control" />
-    <label class="form-label" for="form6Example5">Email</label>
-  </div>
-
-  <!-- Number input -->
-  <div data-mdb-input-init class="form-outline mb-4">
-    <input type="number" id="form6Example6" class="form-control" />
-    <label class="form-label" for="form6Example6">Phone</label>
-  </div>
-
-  <!-- Message input -->
-  <div data-mdb-input-init class="form-outline mb-4">
-    <textarea class="form-control" id="form6Example7" rows="4"></textarea>
-    <label class="form-label" for="form6Example7">Additional information</label>
-  </div>
-
-  <!-- Checkbox -->
-  <div class="form-check d-flex justify-content-center mb-4">
-    <input
-      class="form-check-input me-2"
-      type="checkbox"
-      value=""
-      id="form6Example8"
-      checked
-    />
-    <label class="form-check-label" for="form6Example8"> Create an account? </label>
-  </div>
-
-  <!-- Submit button -->
-  <button data-mdb-ripple-init type="button" class="btn btn-primary btn-block mb-4">Place order</button>
-</form>
+</div>

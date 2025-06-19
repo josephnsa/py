@@ -3,7 +3,10 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-
+from .models import ReservaCuarto  
+from django.http import JsonResponse
+from .models import CategoriaCuarto
+from django.db.models import Q
 def inicio(request):
     return render(request, 'paginas/Inicio.html')
     
@@ -11,7 +14,8 @@ def nosotros(request):
     return render(request, 'paginas/nosotros.html')
 
 def habitaciones(request):
-    return render(request, 'habitaciones/index.html')
+    reservas = ReservaCuarto.objects.select_related('cuarto').all()
+    return render(request, 'habitaciones/index.html', {'reservas': reservas})
 
 def crear_habitacion(request):
     return render(request, 'habitaciones/crear.html')
@@ -48,3 +52,8 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
+def obtener_categorias(request):
+    categorias = CategoriaCuarto.objects.all().values('id', 'nombre')
+    return JsonResponse(list(categorias), safe=False)
+
+    

@@ -1,19 +1,11 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block titulo %}
-    Editar
+  Editar
 {% endblock %}
 
 {% block contenido %}
-            
-            <div class="card text-start">
-                <img class="card-img-top" src="holder.js/100px180/" alt="Title" />
-                <div class="card-body">
-                    <h4 class="card-title">Editaremos el formulario</h4>
-                    <p class="card-text">editar</p>
-                </div>
-            </div>
-            
-{% include "habitaciones/form.html" %}
+  <div class="card text-start"></div>
 
+  {% comment %} {% include 'habitaciones/form.html' %} {% endcomment %}
 {% endblock %}
