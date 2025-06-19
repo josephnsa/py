@@ -1,36 +1,46 @@
 {% extends "base.html" %}
+{% load static %} 
 
-{% block titulo %}
-Iniciar Sesión
+{% block titulo %}Iniciar Sesión{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
 
 {% block contenido %}
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card shadow-sm">
-        <div class="card-header text-center bg-primary text-white">
-          <h4>Iniciar Sesión</h4>
-        </div>
-        <div class="card-body">
-          <form method="post">
-            {% csrf_token %}
-            <div class="mb-3">
-              <label for="username" class="form-label">Usuario</label>
-              <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Entrar</button>
-          </form>
-          <div class="text-center mt-3">
-            <a href="{% url 'register' %}">¿No tienes una cuenta? Regístrate</a>
-          </div>
-        </div>
+<!-- Contenido solo del login -->
+<div class="d-flex align-items-center justify-content-center vh-100 text-white bg-dark">
+  <main class="w-100" style="max-width: 330px;">
+    <form class="p-4 shadow-sm bg-secondary bg-opacity-10 rounded text-white">
+      <div class="text-center mb-4">
+        <img src="{% static 'assets/brand/bootstrap-logo.svg' %}" alt="Logo" width="72" height="57">
       </div>
-    </div>
-  </div>
+
+      <h1 class="h4 mb-3 text-center fw-normal">Iniciar sesión</h1>
+
+      <div class="mb-3">
+        <label for="correo" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control bg-dark bg-opacity-10 text-white border-secondary" id="correo" placeholder="correo@ejemplo.com">
+      </div>
+
+      <div class="mb-3">
+        <label for="contrasena" class="form-label">Contraseña</label>
+        <input type="password" class="form-control bg-dark bg-opacity-10 text-white border-secondary" id="contrasena" placeholder="Contraseña">
+      </div>
+
+      <div class="form-check mb-3 text-start">
+        <input class="form-check-input bg-dark border-secondary" type="checkbox" value="" id="rememberMe">
+        <label class="form-check-label text-white-50" for="rememberMe">
+          Recordarme
+        </label>
+      </div>
+
+<a href="{% url 'habitaciones' %}" class="w-100 btn btn-lg btn-outline-light">Ingresar</a>
+
+      <p class="mt-4 mb-0 text-white-50 text-center">&copy; 2017–2025 Hotel Paraíso</p>
+    </form>
+  </main>
 </div>
+
+
 {% endblock %}
