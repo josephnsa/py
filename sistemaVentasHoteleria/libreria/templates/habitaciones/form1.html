@@ -1,0 +1,68 @@
+<div class="container py-5 bg-dark text-white">
+  <!-- Panel Crear Habitación -->
+  <div class="card bg-dark border-secondary shadow mb-4">
+    <div class="card-header bg-secondary text-white fw-bold">
+      Crear Habitación
+    </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data" class="row g-3">
+        {% csrf_token %}
+
+        <div class="col-md-4">
+          <label for="id_numero" class="form-label text-white">Número de la Habitación</label>
+          <input type="text" name="numero" id="id_numero" class="form-control bg-dark text-white border-secondary" value="{{ form.numero.value|default:'' }}">
+        </div>
+
+        <div class="col-md-4">
+          <label for="id_piso" class="form-label text-white">Piso</label>
+          <input type="number" name="piso" id="id_piso" class="form-control bg-dark text-white border-secondary" value="{{ form.piso.value|default:'' }}">
+        </div>
+
+        <div class="col-md-4">
+          <label for="id_categoria" class="form-label text-white">Categoría</label>
+          <select name="categoria" id="id_categoria" class="form-select bg-dark text-white border-secondary">
+            <option selected disabled>Selecciona...</option>
+            {% for categoria in categorias %}
+              <option value="{{ categoria.id }}" {% if form.categoria.value == categoria.id %}selected{% endif %}>{{ categoria.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label for="id_capacidad" class="form-label text-white">Capacidad de Personas</label>
+          <input type="number" name="capacidad" id="id_capacidad" class="form-control bg-dark text-white border-secondary" value="{{ form.capacidad.value|default:'' }}">
+        </div>
+
+        <div class="col-md-4">
+          <label for="id_precio_por_noche" class="form-label text-white">Precio por Noche</label>
+          <input type="number" step="0.01" name="precio_por_noche" id="id_precio_por_noche" class="form-control bg-dark text-white border-secondary" value="{{ form.precio_por_noche.value|default:'' }}">
+        </div>
+
+        <div class="col-md-4">
+          <label for="id_imagen" class="form-label text-white">Imagen de la Habitación</label>
+          <input type="file" name="imagen" id="id_imagen" class="form-control bg-dark text-white border-secondary">
+        </div>
+
+        <div class="col-12">
+          <label for="id_descripcion" class="form-label text-white">Descripción de la Habitación</label>
+          <textarea name="descripcion" id="id_descripcion" class="form-control bg-dark text-white border-secondary">{{ form.descripcion.value|default:'' }}</textarea>
+        </div>
+
+        <div class="col-12">
+          <label for="id_servicios" class="form-label text-white">Servicios Incluidos (separados por comas)</label>
+          <textarea name="servicios" id="id_servicios" class="form-control bg-dark text-white border-secondary">{{ form.servicios.value|default:'' }}</textarea>
+        </div>
+
+        <div class="col-12 form-check">
+          <input type="checkbox" name="disponible" id="id_disponible" class="form-check-input" {% if form.disponible.value %}checked{% endif %}>
+          <label class="form-check-label text-white" for="id_disponible">Disponible</label>
+        </div>
+
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-outline-light px-4">Guardar</button>
+          <a href="{% url 'habitaciones' %}" class="btn btn-secondary px-4">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
