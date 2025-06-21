@@ -3,6 +3,10 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from libreria.models import RoomReservation
+from django.db.models import Q
+from django.db import models 
+from django.shortcuts import render, redirect
 # from .forms import CustomUserCreationForm
 
 def inicio(request):
@@ -14,8 +18,40 @@ def nosotros(request):
 def habitaciones(request):
     return render(request, 'habitaciones/index.html')
 
+
+
 def crear_habitacion(request):
-    return render(request, 'habitaciones/crear.html')
+    reservas = RoomReservation.objects.select_related('room', 'customer')
+
+    codigo = request.GET.get('codigo')
+    fecha_ingreso = request.GET.get('fechaIngreso')
+    fecha_salida = request.GET.get('fechaSalida')
+    tipo_habitacion = request.GET.get('tipoHabitacion')
+
+    if codigo:
+        reservas = reservas.filter(code__icontains=codigo)
+    if fecha_ingreso:
+        reservas = reservas.filter(check_in__gte=fecha_ingreso)
+    if fecha_salida:
+        reservas = reservas.filter(check_out__lte=fecha_salida)
+    if tipo_habitacion:
+        reservas = reservas.filter(room__tipo=tipo_habitacion)
+
+    # Adaptar los campos al template
+    reservas = reservas.values(
+        codigo_reserva=models.F('code'),
+        cuarto=models.F('room'),
+        nombre_cliente=models.F('customer__full_name'),
+        fecha_ingreso=models.F('check_in'),
+        fecha_salida=models.F('check_out'),
+        fecha_reserva=models.F('created_at')
+    )
+
+    context = {
+        'reservas': reservas
+    }
+    return render(request, 'habitaciones/crear.html', context)
+
 
 def editar(request):
     return render(request, 'habitaciones/editar.html')
@@ -47,5 +83,3 @@ def register_view(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'auth/register.html', {'form': form})
-
-

@@ -27,7 +27,7 @@ from .region import Region
 from .province import Province
 from .district import District
 
-
+from .reservation import RoomReservation
 
 from .room_maintenance import RoomMaintenance
 from .room_change_log import RoomChangeLog

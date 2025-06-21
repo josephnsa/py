@@ -20,8 +20,10 @@ from .models import (
     RoomChangeLog,
     ReservationHistory,
     CustomUser,
+    Region,
+    Province,
+    District
 )
-
 
 # ------------------------------
 # Sección: Habitaciones
@@ -50,6 +52,7 @@ admin.site.register(ReservationSource)
 # ------------------------------
 admin.site.register(Customer)
 admin.site.register(Staff)
+
 @admin.register(DocumentType)
 class DocumentTypeAdmin(admin.ModelAdmin):
     list_display = ('abbreviation', 'name')
@@ -62,10 +65,16 @@ admin.site.register(Service)
 admin.site.register(RoomService)
 admin.site.register(Payment)
 
+# ------------------------------
+# Mantenimiento y Historial
+# ------------------------------
 admin.site.register(RoomMaintenance)
 admin.site.register(RoomChangeLog)
 admin.site.register(ReservationHistory)
 
+# ------------------------------
+# Usuario personalizado
+# ------------------------------
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
@@ -75,3 +84,10 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('dni', 'phone', 'address', 'region', 'district', 'email_confirmed', 'accepted_terms')
         }),
     )
+
+# ------------------------------
+# Ubicación geográfica
+# ------------------------------
+admin.site.register(Region)
+admin.site.register(Province)
+admin.site.register(District)
