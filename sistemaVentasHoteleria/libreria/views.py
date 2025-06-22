@@ -56,19 +56,19 @@ def crear_habitacion(request):
 def editar(request):
     return render(request, 'habitaciones/editar.html')
 
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         user = authenticate(request, username=username, password=password)
 
-        if user is not None:
-            login(request, user)
-            return redirect('inicio')
-        else:
-            messages.error(request, 'Usuario o contraseña incorrectos.')
+#         if user is not None:
+#             login(request, user)
+#             return redirect('inicio')
+#         else:
+#             messages.error(request, 'Usuario o contraseña incorrectos.')
 
-    return render(request, 'usuarios/login.html')
+#     return render(request, 'usuarios/login.html')
 
 def logout_view(request):
     logout(request)
@@ -83,3 +83,5 @@ def register_view(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'auth/register.html', {'form': form})
+
+
