@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+  ROOM
+{% endblock %}
+
+{% block contenido %}
+<div class="container mt-4">
+  <div class="row">
+    {% for room in rooms %}
+    <div class="col-md-3 mb-4">
+      <a href="{% url 'seleccionado_room' room.numero %}" style="text-decoration: none;">
+        <div class="card text-white 
+          {% if room.estado == 'DISPONIBLE' %} bg-success
+          {% elif room.estado == 'RESERVADO' %} bg-primary
+          {% elif room.estado == 'OCUPADO' %} bg-danger
+          {% endif %}">
+          <div class="card-body text-center">
+            <h5 class="card-title">Nro:{{ room.numero }}</h5>
+            <p class="card-text">Habitación Individual</p>
+            <p class="card-text font-weight-bold">{{ room.estado }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/form1.js' %}"></script>
+{% endblock %}

@@ -3,6 +3,11 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from libreria.models import RoomReservation
+from django.db.models import Q
+from django.db import models 
+from django.shortcuts import render, redirect
+# from .forms import CustomUserCreationForm
 # from .forms import CustomUserCreationForm
 
 def inicio(request):
@@ -15,10 +20,79 @@ def habitaciones(request):
     return render(request, 'habitaciones/index.html')
 
 def crear_habitacion(request):
-    return render(request, 'habitaciones/crear.html')
+    reservas = RoomReservation.objects.select_related('room', 'customer')
+
+    codigo = request.GET.get('codigo')
+    fecha_ingreso = request.GET.get('fechaIngreso')
+    fecha_salida = request.GET.get('fechaSalida')
+    tipo_habitacion = request.GET.get('tipoHabitacion')
+
+    if codigo:
+        reservas = reservas.filter(code__icontains=codigo)
+    if fecha_ingreso:
+        reservas = reservas.filter(check_in__gte=fecha_ingreso)
+    if fecha_salida:
+        reservas = reservas.filter(check_out__lte=fecha_salida)
+    if tipo_habitacion:
+        reservas = reservas.filter(room__tipo=tipo_habitacion)
+
+    # Adaptar los campos al template
+    reservas = reservas.values(
+        codigo_reserva=models.F('code'),
+        cuarto=models.F('room'),
+        nombre_cliente=models.F('customer__full_name'),
+        fecha_ingreso=models.F('check_in'),
+        fecha_salida=models.F('check_out'),
+        fecha_reserva=models.F('created_at')
+    )
+
+    context = {
+        'reservas': reservas
+    }
+    return render(request, 'habitaciones/crear.html', context)
+
 
 def editar(request):
     return render(request, 'habitaciones/editar.html')
+
+def operation_room(request):
+    rooms = [
+        {'numero': 1, 'estado': 'DISPONIBLE'},
+        {'numero': 2, 'estado': 'DISPONIBLE'},
+        {'numero': 3, 'estado': 'OCUPADO'},
+        {'numero': 4, 'estado': 'DISPONIBLE'},
+        {'numero': 5, 'estado': 'DISPONIBLE'},
+        {'numero': 6, 'estado': 'DISPONIBLE'},
+        {'numero': 7, 'estado': 'DISPONIBLE'},
+        {'numero': 9, 'estado': 'RESERVADO'},
+        {'numero': 10, 'estado': 'RESERVADO'},
+        {'numero': 11, 'estado': 'DISPONIBLE'},
+        {'numero': 12, 'estado': 'DISPONIBLE'},
+        {'numero': 13, 'estado': 'DISPONIBLE'},
+        {'numero': 11, 'estado': 'DISPONIBLE'},
+        {'numero': 12, 'estado': 'DISPONIBLE'},
+        {'numero': 13, 'estado': 'DISPONIBLE'},
+        {'numero': 11, 'estado': 'DISPONIBLE'},
+        {'numero': 12, 'estado': 'DISPONIBLE'},
+        {'numero': 13, 'estado': 'DISPONIBLE'},
+    ]
+    return render(request, 'habitaciones/operation-room.html', {'rooms': rooms})
+def seleccionado_room(request, numero):
+    return render(request, 'habitaciones/operation-creation.html', {'numero': numero})
+
+def login_view(request):
+     if request.method == 'POST':
+         username = request.POST['username']
+         password = request.POST['password']
+         user = authenticate(request, username=username, password=password)
+         if user is not None:
+             login(request, user)
+             return redirect('inicio')
+         else:
+             messages.error(request, 'Usuario o contraseña incorrectos.')
+
+     return render(request, 'usuarios/login.html')
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -47,5 +121,3 @@ def register_view(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'auth/register.html', {'form': form})
-
-

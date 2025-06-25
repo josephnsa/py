@@ -75,7 +75,7 @@
         <svg class="bi me-2" width="40" height="32">
           <use xlink:href="#bootstrap" />
         </svg>
-        <span class="fs-4">Sidebar</span>
+        <span class="fs-4">HotelOnichan</span>
       </a>
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
@@ -83,22 +83,22 @@
           <a href="#" class="nav-link active text-white" aria-current="page" onclick="cargarContenido('{% url 'crear' %}')">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#home" />
-            </svg>Crear Habitación
+            </svg>Visualizar Reservas
           </a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link text-white" onclick="cargarContenido('{% url 'editar' %}')">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#speedometer2" />
-            </svg>Editar Habitación
+            </svg>Reservar Cuarto
           </a>
         </li>
 
         <li>
-          <a href="#" class="nav-link text-white" onclick="cargarContenido('{% url 'editar' %}')">
+          <a href="#" class="nav-link text-white" onclick="cargarContenido('{% url 'operation_room' %}')">
             <svg class="bi me-2" width="16" height="16">
               <use xlink:href="#table" />
-            </svg>Agregar habitacion
+            </svg>Cuartos
           </a>
         </li>
         <li>

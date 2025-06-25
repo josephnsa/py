@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block titulo %}
   Editar
 {% endblock %}
@@ -7,4 +7,7 @@
 {% block contenido %}
 
   {% include 'habitaciones/form1.html' %}
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/form1.js' %}"></script>
 {% endblock %}
