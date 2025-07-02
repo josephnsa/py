@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block titulo %}
+  Reservar habitación
+{% endblock %}
+
+{% block contenido %}
+<div class="container mt-5 text-white">
+  <h2 class="mb-4">Reservar Habitación N° {{ room.numero }}</h2>
+
+  <form method="POST" class="bg-dark p-4 rounded shadow-sm border border-secondary">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Nombre del cliente</label>
+        {{ form.customer_name|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Documento</label>
+        {{ form.customer_document|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Correo</label>
+        {{ form.customer_email|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Teléfono</label>
+        {{ form.customer_phone|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Fecha de Ingreso</label>
+        {{ form.check_in|attr:"type:date"|add_class:"form-control" }}
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Fecha de Salida</label>
+        {{ form.check_out|attr:"type:date"|add_class:"form-control" }}
+      </div>
+    </div>
+
+    <div class="mt-4 text-end">
+      <button type="submit" class="btn btn-success">Confirmar Reserva</button>
+      <a href="{% url 'habitaciones' %}" class="btn btn-outline-light">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

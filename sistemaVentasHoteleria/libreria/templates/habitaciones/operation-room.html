@@ -7,26 +7,35 @@
 {% block contenido %}
 <div class="container mt-4">
   <div class="row">
-    {% for room in rooms %}
-    <div class="col-md-3 mb-4">
+{% for room in rooms %}
+  <div class="col-md-3 mb-4">
+    {% if room.numero %}
       <a href="{% url 'seleccionado_room' room.numero %}" style="text-decoration: none;">
+    {% else %}
+      <div>
+    {% endif %}
         <div class="card text-white 
           {% if room.estado == 'DISPONIBLE' %} text-bg-success
-          {% elif room.estado == 'RESERVADO' %} text-bg-primary
+          {% elif room.estado == 'NO DISPONIBLE' %} text-bg-danger
           {% elif room.estado == 'OCUPADO' %} text-bg-danger
           {% else %} text-bg-secondary
           {% endif %}">
           <div class="card-body text-center">
-            <h5 class="card-title">Nro: {{ room.numero }}</h5>
+            <h5 class="card-title">Nro: {{ room.numero|default:"N/A" }}</h5>
             <p class="card-text">Piso: {{ room.piso }}</p>
             <p class="card-text">Categoría: {{ room.categoria }}</p>
             <p class="card-text">Cama: {{ room.tipo_cama }}</p>
             <p class="card-text font-weight-bold">{{ room.estado }}</p>
           </div>
         </div>
+    {% if room.numero %}
       </a>
-    </div>
-    {% endfor %}
+    {% else %}
+      </div>
+    {% endif %}
+  </div>
+{% endfor %}
+
   </div>
 </div>
 {% endblock %}

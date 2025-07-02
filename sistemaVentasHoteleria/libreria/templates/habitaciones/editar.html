@@ -1,13 +1,42 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block titulo %}
-  Editar
-{% endblock %}
-
+{% block titulo %} Reclamos Generados {% endblock %}
 {% block contenido %}
+<div class="container mt-4">
+  <div class="row">
+    {% for item in bloques %}
+      <div class="col-md-4 mb-4">
+        <div class="card border-dark shadow">
+          <div class="card-header bg-dark text-white">
+            <strong>Reserva:</strong> {{ item.reserva.code }}<br>
+            <strong>Cliente:</strong> {{ item.reserva.guest_name }}
+          </div>
+          <div class="card-body">
+            <p><strong>Cuarto:</strong> {{ item.cuarto.number }}</p>
+            <p><strong>Estado de la reserva:</strong> {{ item.reserva.status }}</p>
+            <p><strong>Estado general:</strong> {{ item.reporte.estado_general }}</p>
 
-{% include 'habitaciones/form1.html' with form=form %}
-{% endblock %}
-{% block extra_js %}
-<script src="{% static 'js/form1.js' %}"></script>
+            <hr>
+            <p><strong>Observaciones:</strong></p>
+            <ul>
+              {% if item.reporte.observaciones_piso %}<li>Piso: {{ item.reporte.observaciones_piso }}</li>{% endif %}
+              {% if item.reporte.observaciones_paredes %}<li>Paredes: {{ item.reporte.observaciones_paredes }}</li>{% endif %}
+              {% if item.reporte.observaciones_muebles %}<li>Muebles: {{ item.reporte.observaciones_muebles }}</li>{% endif %}
+              {% if item.reporte.observaciones_servicios %}<li>Servicios: {{ item.reporte.observaciones_servicios }}</li>{% endif %}
+              {% if item.reporte.limpieza_general %}<li>Limpieza: {{ item.reporte.limpieza_general }}</li>{% endif %}
+              {% if item.reporte.otros_detalles %}<li>Otros: {{ item.reporte.otros_detalles }}</li>{% endif %}
+            </ul>
+
+            {% if item.reporte.evidencia_1 %}
+              <img src="{{ item.reporte.evidencia_1.url }}" class="img-fluid rounded" style="max-height: 120px;">
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-warning">No hay reclamos registrados aún.</div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}

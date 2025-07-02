@@ -15,6 +15,7 @@ from django.http import HttpResponseBadRequest
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.http import JsonResponse
+from .forms2 import RoomReservationForm
 
 # from .forms import CustomUserCreationForm
 # from .forms import CustomUserCreationForm
@@ -162,7 +163,40 @@ def crear_inspeccion(request, reserva_id):
     else:
         form = RoomInspectionReportForm()
 
-    return render(request, 'inspecciones/formulario_inspeccion.html', {
+    return render(request, 'habitaciones/formulario_inspeccion.html', {
         'form': form,
         'reserva': reserva,
     })
+
+@login_required
+def reserva_habitacion(request, room_id):
+    room = get_object_or_404(Room, id=room_id)
+
+    if request.method == 'POST':
+        form = RoomReservationForm(request.POST)
+        if form.is_valid():
+            reserva = form.save(commit=False)
+            reserva.user = request.user
+            reserva.room = room
+            reserva.status = 'ocupado'  
+            reserva.save()
+            return redirect('habitaciones')  
+    else:
+        form = RoomReservationForm()
+
+    return render(request, 'habitaciones/reserva_habitacion.html', {
+        'room': room,
+        'form': form
+    })
+def editar_view(request):
+    reportes = RoomInspectionReport.objects.select_related('reservation', 'room', 'category').all()
+
+    bloques = []
+    for reporte in reportes:
+        bloques.append({
+            'reserva': reporte.reservation,
+            'cuarto': reporte.room,
+            'reporte': reporte
+        })
+
+    return render(request, 'habitaciones/editar.html', {'bloques': bloques})
