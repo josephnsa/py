@@ -9,7 +9,13 @@ from django.db import models
 from django.shortcuts import render, redirect
 from django.shortcuts import render
 from django.utils import timezone
-from libreria.models import Room, RoomReservation
+from libreria.models import Room, RoomReservation, RoomInspectionReport
+from .form1 import RoomInspectionReportForm
+from django.http import HttpResponseBadRequest
+from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
+from django.http import JsonResponse
+
 # from .forms import CustomUserCreationForm
 # from .forms import CustomUserCreationForm
 
@@ -133,3 +139,30 @@ def register_view(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'auth/register.html', {'form': form})
+
+
+def crear_inspeccion(request, reserva_id):
+    reserva = get_object_or_404(RoomReservation, id=reserva_id)
+
+    if RoomInspectionReport.objects.filter(reservation=reserva).exists():
+        messages.warning(request, "Ya existe un reclamo para esta reserva.")
+        return redirect('crear') 
+
+    if request.method == 'POST':
+        form = RoomInspectionReportForm(request.POST, request.FILES)
+        if form.is_valid():
+            inspeccion = form.save(commit=False)
+            inspeccion.reservation = reserva
+            inspeccion.room = reserva.room
+            inspeccion.category = reserva.room.category
+            inspeccion.save()
+
+            messages.success(request, "✅ Se registró el reclamo correctamente.")
+            return redirect('crear')
+    else:
+        form = RoomInspectionReportForm()
+
+    return render(request, 'inspecciones/formulario_inspeccion.html', {
+        'form': form,
+        'reserva': reserva,
+    })

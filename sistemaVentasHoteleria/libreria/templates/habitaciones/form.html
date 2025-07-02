@@ -22,13 +22,8 @@
   <div class="col-md-3">
     <label for="tipoHabitacion" class="form-label text-white">Tipo de habitación</label>
     <select class="form-select bg-dark text-white border-secondary" id="tipoHabitacion" name="tipoHabitacion">
-      <option disabled {% if not request.GET.tipoHabitacion %}selected{% endif %}>Selecciona...</option>
-      <option value="simple" {% if request.GET.tipoHabitacion == 'simple' %}selected{% endif %}>Simple</option>
-      <option value="doble" {% if request.GET.tipoHabitacion == 'doble' %}selected{% endif %}>Doble</option>
-      <option value="suite" {% if request.GET.tipoHabitacion == 'suite' %}selected{% endif %}>Suite</option>
     </select>
   </div>
-
     </div>
   </div>
 
@@ -40,7 +35,7 @@
         <thead class="thead-light text-white">
           <tr>
             <th>Código</th>
-            <th>Acciones</th>
+            <th>Reclamo</th>
             <th>Cuarto Reservado</th>
             <th>Nombre del Cliente</th>
             <th>Fecha Ingreso</th>
@@ -54,8 +49,13 @@
     <tr>
       <td>{{ reserva.code }}</td>
       <td>
-        <a href="#" class="btn btn-primary btn-sm">Generar Reclamo</a>
-      </td>
+  {% if not reserva.roominspectionreport %}
+    <a href="{% url 'crear_inspeccion' reserva.id %}" class="btn btn-primary btn-sm">Generar Reclamo</a>
+  {% else %}
+<span class="text-white">Ya registrado</span>
+  {% endif %}
+</td>
+
       <td>{{ reserva.room }}</td>
       <td>{{ reserva.customer_name }}</td>
       <td>{{ reserva.check_in }}</td>
@@ -73,4 +73,15 @@
       <pre>{{ reservas }}</pre>
     </div>
   </div>
+  {% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
 </div>

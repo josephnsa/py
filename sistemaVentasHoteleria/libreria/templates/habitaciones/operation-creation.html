@@ -60,7 +60,7 @@
     </div>
 
     <!-- Datos del cliente si hay reserva -->
-    {% if reserva %}
+    {% comment %} {% if reserva %}
       <div class="row mt-4">
         <div class="col-md-12">
           <div class="bg-secondary border border-light rounded shadow-sm text-white p-4">
@@ -98,6 +98,6 @@
           </div>
         </div>
       </div>
-    {% endif %}
+    {% endif %} {% endcomment %}
   </div>
 {% endblock %}

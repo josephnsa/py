@@ -6,7 +6,7 @@
 
 {% block contenido %}
 
-  {% include 'habitaciones/form1.html' %}
+{% include 'habitaciones/form1.html' with form=form %}
 {% endblock %}
 {% block extra_js %}
 <script src="{% static 'js/form1.js' %}"></script>
