@@ -33,105 +33,92 @@
       </div>
     </nav>
   </header>
-
+  
   <main class="text-white bg-dark">
-    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel ">
-      <div class="carousel-indicators vh-100">
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+      <!-- Indicadores -->
+       <div class="carousel-indicators">
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
       </div>
-      <div class="carousel-inner vh-80">
-        <div class="carousel-item active">
-          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <rect width="100%" height="100%" fill="#777" />
-          </svg>
-
-          <div class="container">
+      <div id="hotelCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <!-- Slide 1 -->
+           <div class="carousel-item active">
+            <img src="{% static 'img/bienvenido.jpg' %}" class="d-block w-100 oscurecer" alt="Bienvenido">
             <div class="carousel-caption text-start">
               <h1>Bienvenido a Hotel Paraíso</h1>
               <p>Disfruta de una experiencia única con instalaciones de lujo y servicio personalizado.</p>
-              <p>
-                <a class="btn btn-lg btn-primary" href="#">Reserva ahora</a>
-              </p>
+              <a class="btn btn-lg btn-primary" href="#">Reserva ahora</a>
             </div>
           </div>
-        </div>
-        <div class="carousel-item">
-          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <rect width="100%" height="100%" fill="#777" />
-          </svg>
-
-          <div class="container">
+          
+          <!-- Slide 2 -->
+           <div class="carousel-item">
+            <img src="{% static 'img/descanso1.jpg' %}" class="d-block w-100 oscurecer" alt="Descanso garantizado">
             <div class="carousel-caption">
               <h1>Descanso garantizado</h1>
-              <p>Relájate en nuestras cómodas habitaciones con vistas espectaculares y todas las comodidades que necesitas.</p>
-              <p>
-                <a class="btn btn-lg btn-primary" href="#">Saber más</a>
-              </p>
+              <p>Relájate en nuestras cómodas habitaciones con vistas espectaculares.</p>
+              <a class="btn btn-lg btn-primary" href="#">Saber más</a>
             </div>
           </div>
-        </div>
-        <div class="carousel-item">
-          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <rect width="100%" height="100%" fill="#777" />
-          </svg>
-
-          <div class="container">
+          
+          <!-- Slide 3 -->
+           <div class="carousel-item">
+            <img src="{% static 'img/entorno1.jpg' %}" class="d-block w-100 oscurecer" alt="Entorno natural">
             <div class="carousel-caption text-end">
               <h1>Descubre nuestro entorno</h1>
-              <p>Explora paisajes naturales, actividades recreativas y la cultura local desde nuestro hotel.</p>
-              <p>
-                <a class="btn btn-lg btn-primary" href="#">Ver galería</a>
-              </p>
+              <p>Explora paisajes naturales y actividades recreativas.</p>
+              <a class="btn btn-lg btn-primary" href="#">Ver galería</a>
             </div>
           </div>
         </div>
+        
+        <!-- Flechas -->
+         <button class="carousel-control-prev" type="button" data-bs-target="#hotelCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>          
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#hotelCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Siguiente</span>
+        </button>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Anterior</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Siguiente</span>
-      </button>
-    </div>
 
     <div class="container marketing">
       <div class="row">
         <div class="col-lg-4">
-          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100%" height="100%" fill="#777" />
-          </svg>
-
+          <div style="width:140px; height:140px; border-radius: 50%; overflow: hidden; background: #777; margin: 0 auto;">
+            <img src="{% static 'img/habitaciones1.jpg' %}"
+            alt="Habitaciones de lujo"
+            style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
           <h2>Habitaciones de lujo</h2>
           <p>Espacios diseñados para tu confort con acabados elegantes y todas las comodidades que necesitas.</p>
-          <p>
-            <a class="btn btn-secondary" href="#">Ver detalles</a>
-          </p>
+          <p><a class="btn btn-secondary" href="#">Ver detalles</a></p>
         </div>
+        
         <div class="col-lg-4">
-          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100%" height="100%" fill="#777" />
-          </svg>
-
+          <div style="width:140px; height:140px; border-radius: 50%; overflow: hidden; background: #777; margin: 0 auto;">
+            <img src="{% static 'img/gastronomia1.jpg' %}"
+            alt="Gastronomía local"
+            style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
           <h2>Gastronomía local</h2>
           <p>Disfruta de una exquisita variedad de platos típicos e internacionales preparados por chefs expertos.</p>
-          <p>
-            <a class="btn btn-secondary" href="#">Ver detalles</a>
-          </p>
+          <p><a class="btn btn-secondary" href="#">Ver detalles</a></p>
         </div>
+        
         <div class="col-lg-4">
-          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100%" height="100%" fill="#777" />
-          </svg>
-
+          <div style="width:140px; height:140px; border-radius: 50%; overflow: hidden; background: #777; margin: 0 auto;">
+            <img src="{% static 'img/eventos.jpg' %}"
+            alt="Eventos y reuniones"
+           style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
           <h2>Eventos y reuniones</h2>
           <p>Salones equipados para bodas, conferencias y eventos corporativos con atención personalizada.</p>
-          <p>
-            <a class="btn btn-secondary" href="#">Ver detalles</a>
-          </p>
+          <p><a class="btn btn-secondary" href="#">Ver detalles</a></p>
         </div>
       </div>
 
@@ -143,9 +130,12 @@
           <p class="lead">Descansa en un entorno natural con todos los servicios que necesitas para unas vacaciones perfectas.</p>
         </div>
         <div class="col-md-5">
-          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100%" height="100%" fill="#eee" />
-          </svg>
+          <img src="{% static 'img/experiencia.jpg' %}" 
+     alt="Piscina moderna frente al mar al atardecer"
+     width="500" height="500"
+     class="featurette-image img-fluid mx-auto"
+     style="object-fit: cover;" />
+
         </div>
       </div>
 
@@ -157,9 +147,11 @@
           <p class="lead">Nuestras instalaciones combinan diseño moderno y funcionalidad para brindarte una estadía excepcional.</p>
         </div>
         <div class="col-md-5 order-md-1">
-          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100%" height="100%" fill="#eee" />
-          </svg>
+          <img src="{% static 'img/comodidad.jpg' %}" 
+          alt="Piscina moderna frente al mar al atardecer"
+          width="500" height="500"
+          class="featurette-image img-fluid mx-auto"
+          style="object-fit: cover;" />
         </div>
       </div>
 
@@ -171,9 +163,11 @@
           <p class="lead">Nuestro equipo está comprometido en brindarte atención cálida y personalizada desde tu llegada.</p>
         </div>
         <div class="col-md-5">
-          <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg">
-            <rect width="100%" height="100%" fill="#eee" />
-          </svg>
+          <img src="{% static 'img/descubre.jpg' %}"
+          alt="Piscina interior con techo de cristal moderno"
+          class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+          width="500" height="500"
+          style="object-fit: cover;" />
         </div>
       </div>
 
@@ -189,4 +183,9 @@
       </p>
     </footer>
   </main>
+
+
+
+
+  
 {% endblock %}
