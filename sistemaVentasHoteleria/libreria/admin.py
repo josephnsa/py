@@ -22,8 +22,10 @@ from .models import (
     CustomUser,
     Region,
     Province,
-    District
+    District,
+    RoomInspectionReport
 )
+from libreria.models import Cuarto, ReservaCuarto, CategoriaCuarto
 
 # ------------------------------
 # Sección: Habitaciones
@@ -44,7 +46,12 @@ admin.site.register(RoomAmenity)
 # ------------------------------
 # Sección: Reservas
 # ------------------------------
-admin.site.register(RoomReservation)
+@admin.register(RoomReservation)
+class RoomReservationAdmin(admin.ModelAdmin):
+    list_display = ('code', 'customer_name', 'room', 'status', 'check_in', 'check_out')
+    search_fields = ('code', 'customer_name', 'customer_document', 'room__number')
+    list_filter = ('status', 'room')
+
 admin.site.register(ReservationSource)
 
 # ------------------------------
@@ -85,9 +92,23 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
 
+
+
+@admin.register(RoomInspectionReport)
+class RoomInspectionReportAdmin(admin.ModelAdmin):
+    list_display = ('reservation', 'room', 'estado_general', 'creado_en')
+    search_fields = ('reservation__code', 'room__number')
+    list_filter = ('estado_general',)
 # ------------------------------
 # Ubicación geográfica
 # ------------------------------
 admin.site.register(Region)
 admin.site.register(Province)
 admin.site.register(District)
+
+# ------------------------------
+# Modelos adicionales
+# ------------------------------
+admin.site.register(Cuarto)
+admin.site.register(ReservaCuarto)
+admin.site.register(CategoriaCuarto)

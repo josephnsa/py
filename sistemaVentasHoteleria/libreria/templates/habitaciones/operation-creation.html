@@ -1,11 +1,103 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block titulo %}
   Selección
 {% endblock %}
 
 {% block contenido %}
-<div class="container mt-5" >
-  <h2>Has seleccionado la habitación N° {{ numero }}</h2>
-  <p>Aquí puedes mostrar un formulario, detalle o confirmar la reserva.</p>
-</div>
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Imagen -->
+      <div class="col-md-6 mb-3">
+        <div class="bg-dark border border-secondary rounded shadow-sm p-2 text-center">
+          {% if room.image %}
+            <img src="{{ room.image.url }}" class="img-fluid rounded" alt="Imagen de la habitación" />
+          {% else %}
+            <img src="https://via.placeholder.com/500x300" class="img-fluid rounded" alt="Sin imagen" />
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Información de la habitación -->
+      <div class="col-md-6 mb-3">
+        <div class="bg-dark border border-secondary rounded shadow-sm p-4 text-white">
+          <h3 class="mb-3">Habitación N° {{ room.number }}</h3>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item bg-dark text-white">
+              <strong>Piso:</strong> {{ room.floor }}
+            </li>
+            <li class="list-group-item bg-dark text-white">
+              <strong>Categoría:</strong> {{ room.category.name }}
+            </li>
+            <li class="list-group-item bg-dark text-white">
+              <strong>Tipo de cuarto:</strong> {{ room.type.name }}
+            </li>
+            <li class="list-group-item bg-dark text-white">
+              <strong>Estado:</strong> {{ room.status.name }}
+            </li>
+            <li class="list-group-item bg-dark text-white">
+              <strong>Tipo de cama:</strong> {{ room.bed_type.name }}
+            </li>
+            <li class="list-group-item bg-dark text-white">
+              <strong>Capacidad:</strong> {{ room.capacity }} personas
+            </li>
+            <li class="list-group-item bg-dark text-white">
+              <strong>Descripción:</strong> {{ room.description }}
+            </li>
+            <li class="list-group-item bg-dark text-white">
+              <strong>Precio por noche:</strong> S/. {{ room.price_per_night }}
+            </li>
+            <li class="list-group-item bg-dark text-white">
+              <strong>Disponible:</strong> {{ room.available|yesno:'Sí,No' }}
+            </li>
+          </ul>
+          <div class="text-end mt-3">
+            <a href="{% url 'habitaciones' %}" class="btn btn-outline-light">← Volver a habitaciones</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Datos del cliente si hay reserva -->
+    {% if reserva %}
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <div class="bg-secondary border border-light rounded shadow-sm text-white p-4">
+            <h4 class="mb-3 text-white">📋 Datos del Cliente (Reserva Activa)</h4>
+            <div class="row">
+              <div class="col-md-6">
+                <p>
+                  <strong>Nombre:</strong> {{ reserva.customer_name }}
+                </p>
+                <p>
+                  <strong>Documento:</strong> {{ reserva.customer_document }}
+                </p>
+                <p>
+                  <strong>Correo:</strong> {{ reserva.customer_email }}
+                </p>
+                <p>
+                  <strong>Teléfono:</strong> {{ reserva.customer_phone }}
+                </p>
+              </div>
+              <div class="col-md-6">
+                <p>
+                  <strong>Check-in:</strong> {{ reserva.check_in }}
+                </p>
+                <p>
+                  <strong>Check-out:</strong> {{ reserva.check_out }}
+                </p>
+                <p>
+                  <strong>Código de Reserva:</strong> {{ reserva.code }}
+                </p>
+                <p>
+                  <strong>Estado:</strong> {{ reserva.get_status_display }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
 {% endblock %}

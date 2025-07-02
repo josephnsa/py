@@ -50,26 +50,25 @@
           </tr>
         </thead>
         <tbody>
-          {% for reserva in reservas %}
-            <tr>
-              <td>{{ reserva.codigo_reserva }}</td>
-              <td>
-                <button class="btn btn-primary btn-sm">Editar</button>
-                <button class="btn btn-danger btn-sm">Eliminar</button>
-              </td>
-              <td>{{ reserva.cuarto }}</td>
-              <td>{{ reserva.nombre_cliente }}</td>
-              <td>{{ reserva.fecha_ingreso }}</td>
-              <td>{{ reserva.fecha_salida }}</td>
-              <td>{{ reserva.fecha_reserva|date:'Y-m-d H:i' }}</td>
-              <td>{{ reserva.estado }}</td>
-            </tr>
-          {% empty %}
-            <tr>
-              <td colspan="7" class="text-center">No hay reservas registradas.</td>
-            </tr>
-          {% endfor %}
-        </tbody>
+  {% for reserva in reservas %}
+    <tr>
+      <td>{{ reserva.code }}</td>
+      <td>
+        <a href="#" class="btn btn-primary btn-sm">Generar Reclamo</a>
+      </td>
+      <td>{{ reserva.room }}</td>
+      <td>{{ reserva.customer_name }}</td>
+      <td>{{ reserva.check_in }}</td>
+      <td>{{ reserva.check_out }}</td>
+      <td>{{ reserva.created_at|date:'Y-m-d H:i' }}</td>
+      <td>{{ reserva.get_status_display }}</td>
+    </tr>
+  {% empty %}
+    <tr>
+      <td colspan="8" class="text-center">No hay reservas registradas.</td>
+    </tr>
+  {% endfor %}
+</tbody>
       </table>
       <pre>{{ reservas }}</pre>
     </div>

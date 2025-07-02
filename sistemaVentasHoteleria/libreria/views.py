@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -7,6 +7,9 @@ from libreria.models import RoomReservation
 from django.db.models import Q
 from django.db import models 
 from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.utils import timezone
+from libreria.models import Room, RoomReservation
 # from .forms import CustomUserCreationForm
 # from .forms import CustomUserCreationForm
 
@@ -20,7 +23,7 @@ def habitaciones(request):
     return render(request, 'habitaciones/index.html')
 
 def crear_habitacion(request):
-    reservas = RoomReservation.objects.select_related('room', 'customer')
+    reservas = RoomReservation.objects.select_related('room')
 
     codigo = request.GET.get('codigo')
     fecha_ingreso = request.GET.get('fechaIngreso')
@@ -34,17 +37,7 @@ def crear_habitacion(request):
     if fecha_salida:
         reservas = reservas.filter(check_out__lte=fecha_salida)
     if tipo_habitacion:
-        reservas = reservas.filter(room__tipo=tipo_habitacion)
-
-    # Adaptar los campos al template
-    reservas = reservas.values(
-        codigo_reserva=models.F('code'),
-        cuarto=models.F('room'),
-        nombre_cliente=models.F('customer__full_name'),
-        fecha_ingreso=models.F('check_in'),
-        fecha_salida=models.F('check_out'),
-        fecha_reserva=models.F('created_at')
-    )
+        reservas = reservas.filter(room__type__name__icontains=tipo_habitacion)  # Ajusta según modelo RoomType
 
     context = {
         'reservas': reservas
@@ -55,30 +48,49 @@ def crear_habitacion(request):
 def editar(request):
     return render(request, 'habitaciones/editar.html')
 
+
 def operation_room(request):
-    rooms = [
-        {'numero': 1, 'estado': 'DISPONIBLE'},
-        {'numero': 2, 'estado': 'DISPONIBLE'},
-        {'numero': 3, 'estado': 'OCUPADO'},
-        {'numero': 4, 'estado': 'DISPONIBLE'},
-        {'numero': 5, 'estado': 'DISPONIBLE'},
-        {'numero': 6, 'estado': 'DISPONIBLE'},
-        {'numero': 7, 'estado': 'DISPONIBLE'},
-        {'numero': 9, 'estado': 'RESERVADO'},
-        {'numero': 10, 'estado': 'RESERVADO'},
-        {'numero': 11, 'estado': 'DISPONIBLE'},
-        {'numero': 12, 'estado': 'DISPONIBLE'},
-        {'numero': 13, 'estado': 'DISPONIBLE'},
-        {'numero': 11, 'estado': 'DISPONIBLE'},
-        {'numero': 12, 'estado': 'DISPONIBLE'},
-        {'numero': 13, 'estado': 'DISPONIBLE'},
-        {'numero': 11, 'estado': 'DISPONIBLE'},
-        {'numero': 12, 'estado': 'DISPONIBLE'},
-        {'numero': 13, 'estado': 'DISPONIBLE'},
-    ]
+    hoy = timezone.now().date()
+    rooms = []
+
+    for room in Room.objects.all():
+        # Verifica si tiene reserva activa hoy
+        reserva = RoomReservation.objects.filter(
+            room=room,
+            status__in=['reservado', 'ocupado'],
+            check_in__lte=hoy,
+            check_out__gte=hoy
+        ).first()
+
+        # Estado según reserva o disponibilidad
+        if reserva:
+            estado = reserva.status.upper()  # RESERVADO / OCUPADO
+        elif room.available:
+            estado = 'DISPONIBLE'
+        else:
+            estado = 'NO DISPONIBLE'
+
+        rooms.append({
+            'numero': room.number,
+            'estado': estado,
+            'piso': room.floor,
+            'categoria': room.category.name if room.category else 'N/A',
+            'tipo_cama': room.bed_type.name if room.bed_type else 'N/A'
+        })
+
     return render(request, 'habitaciones/operation-room.html', {'rooms': rooms})
 def seleccionado_room(request, numero):
-    return render(request, 'habitaciones/operation-creation.html', {'numero': numero})
+    room = get_object_or_404(Room, number=numero)
+
+    reserva = RoomReservation.objects.filter(
+        room=room,
+        status__in=['reservado', 'ocupado']
+    ).order_by('-created_at').first()  # trae la última reserva activa si existe
+
+    return render(request, 'habitaciones/operation-creation.html', {
+        'room': room,
+        'reserva': reserva  # envía la reserva al template
+    })
 
 def login_view(request):
      if request.method == 'POST':

@@ -11,13 +11,16 @@
     <div class="col-md-3 mb-4">
       <a href="{% url 'seleccionado_room' room.numero %}" style="text-decoration: none;">
         <div class="card text-white 
-          {% if room.estado == 'DISPONIBLE' %} bg-success
-          {% elif room.estado == 'RESERVADO' %} bg-primary
-          {% elif room.estado == 'OCUPADO' %} bg-danger
+          {% if room.estado == 'DISPONIBLE' %} text-bg-success
+          {% elif room.estado == 'RESERVADO' %} text-bg-primary
+          {% elif room.estado == 'OCUPADO' %} text-bg-danger
+          {% else %} text-bg-secondary
           {% endif %}">
           <div class="card-body text-center">
-            <h5 class="card-title">Nro:{{ room.numero }}</h5>
-            <p class="card-text">Habitación Individual</p>
+            <h5 class="card-title">Nro: {{ room.numero }}</h5>
+            <p class="card-text">Piso: {{ room.piso }}</p>
+            <p class="card-text">Categoría: {{ room.categoria }}</p>
+            <p class="card-text">Cama: {{ room.tipo_cama }}</p>
             <p class="card-text font-weight-bold">{{ room.estado }}</p>
           </div>
         </div>
