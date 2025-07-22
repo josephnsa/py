@@ -109,7 +109,7 @@ LOGIN_REDIRECT_URL = '/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'HostalSystemNew',
+        'NAME': 'hotelsystemlaptop',
         'USER': 'root',
         'PASSWORD': '12345678',
         'HOST': '127.0.0.1',
